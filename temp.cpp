@@ -1,17 +1,10 @@
-#define MAX 20
-#define INF 1000000
-typedef int MATRIX[MAX][MAX];
-typedef MATRIX GRAPH;
-typedef int VECTOR[MAX];
-typedef VECTOR ARRAY;
-typedef VECTOR SET;
-
-#include <iostream>
-using namespace std;
-
-void Dijkstra(GRAPH G, int n,int startnode)
-
+#include<stdio.h>
+#include<conio.h>
+#define INFINITY 9999
+#define MAX 10
+void dijkstra(int G[MAX][MAX], int n, int startnode)
 {
+
 	int cost[MAX][MAX], distance[MAX], pred[MAX];
 	int visited[MAX], count, mindistance, nextnode, i, j;
 
@@ -21,7 +14,7 @@ void Dijkstra(GRAPH G, int n,int startnode)
 	for (i = 0; i<n; i++)
 		for (j = 0; j<n; j++)
 			if (G[i][j] == 0)
-				cost[i][j] = INF;
+				cost[i][j] = INFINITY;
 			else
 				cost[i][j] = G[i][j];
 
@@ -39,7 +32,7 @@ void Dijkstra(GRAPH G, int n,int startnode)
 
 	while (count<n - 1)
 	{
-		mindistance = INF;
+		mindistance = INFINITY;
 
 		//Nut ke tiep co khoang cach nho nhat
 		for (i = 0; i<n; i++)
@@ -62,54 +55,61 @@ void Dijkstra(GRAPH G, int n,int startnode)
 	}
 
 	//In ra duong di va khoang cach den moi nut
-	// cout << "Cach di" << setw(10)<< "Chi phi";
 	for (i = 0; i<n; i++)
 		if (i != startnode)
 		{
-			cout <<"\nChi phi toi nut "<< i+1 << ": " << distance[i];
-			cout <<"\nCach di ="<< i+1;;
+			printf("\nKhoang cac toi nut %d=%d", i, distance[i]);
+			printf("\nDuong di =%d", i);
 
 			j = i;
 			do
 			{
 				j = pred[j];
-				cout <<"<--" << j+1;
-			} while (j != (startnode));
+				printf("<-%d", j);
+			} while (j != startnode);
 		}
 }
+//void dijkstra(int G[MAX][MAX], int n, int startnode);
+// Xuat ket qua ma tran ke cua do thi ra man hinh.
 
 
+void XuatMTKe(int G[][MAX], int n){
+	printf("\nMa tran ke:\n");
+	for (int i = 0; i<n; i++){
+		for (int j = 0; j<n; j++)
+			printf("%3d ", G[i][j]);
+		printf("\n");
+	}
+}
 
-
-void BellmanFord(int startnode,GRAPH G, int n)
-//Tim ddnn tu dinh u den moi dinh khac
-//p[j] la dinh truoc j tren ddnn
+int main()
 {
-	int i,j,k,done;
-	ARRAY p,D;
-  for (i=0; i<n; i++) D[i]=INF; D[startnode]=0;
-  for (i=0; i<n; i++) p[i]=i; 
-  
-  for (k=0; k<n; k++){
-  	done=1;
-  	for (i=0; i<n; i++) if (D[i]<INF)
-  	  for (j=0; j<n; j++) if (G[i][j])
-  	  	if (D[i]+G[i][j]<D[j]){
-  	  	  D[j]=D[i]+G[i][j]; 
-  	  	  p[j]=i;
-  	  	  done=0;
-	  }
-	if (done)  break;
-  }
-	cout << "\nCac duong di:\n";
-	cout << "Cach di : Chi phi"<<endl;
-	for (int k=0; k<n; k++) if (k!=startnode){
-		i=k;
-		cout <<setw(1)<<left << i+1 <<"<--";
-		while (p[i]!=startnode){
-		i=p[i];
-		cout << i+1 << "<--";
+	int G[MAX][MAX], i, j, n, u;
+	/*printf("Nhap vao so dinh cua do thi:");
+	scanf("%d", &n);
+	printf("\nNhap vao ma tran ke cua do thi:\n");
+
+	for (i = 0; i<n; i++)
+		for (j = 0; j<n; j++)
+			scanf("%d", &G[i][j]);*/
+	FILE *f = fopen("test.inp", "rt");
+	if (f == NULL){
+		printf("Doc file loi !!!");
+		return 0;
+	}
+	fscanf(f, "%d", &n);
+	for (int i = 0; i<n; i++)	{
+		for (int j = 0; j<n; j++){
+			fscanf(f, "%d", &(G[i][j]));
 		}
-	cout << startnode+1 <<" : " << D[k] << endl;
+	}
+
+	XuatMTKe(G, n);
+
+	printf("\nNhap vao nut nguon:");
+	scanf("%d", &u);
+	dijkstra(G, n, u);
+
+	return 0;
 }
-}
+

@@ -1,23 +1,23 @@
 #include "DoThi.h"
-#include "ThuatToan.h"
+#include "Test_thuatoan.h"
 #include <iomanip>
 #include <conio.h>
 #include <iostream>
+#include <fstream> 
 using namespace std;
 typedef char thaotac[100];
-thaotac tt[4] =
+thaotac tt[5] =
 {
 	" 1. Tim duong di ngan nhat bang Dijkstra ",
 	" 2. Tim duong di ngan nhat bang Bellman-Ford  ",
-	" 3. Thoat"
+	" 3. Tim duong di ngan nhat giua hai nut dung Dijkstra",
+	" 4. Thoat"
 
 };
 void chon(int chon);
 void menu();
 
 char  A[20] = "Test.inp";
-
-
 int main()
 {
 
@@ -41,7 +41,7 @@ void menu()
 		cout << "\n";
 		cout << "   -----------   LUA CHON   -----------" << endl;
 		cout << "(Su dung phim mui ten de dieu khien) " << endl;
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 4; i++)
 		{
 			if (i == pos) cout << tt[i] << "   <--- " << endl;
 			else cout << tt[i] << endl;
@@ -52,11 +52,11 @@ void menu()
 		{
 		case 72:
 		{
-			if (pos == 0) pos = 2; else pos--; break;
+			if (pos == 0) pos = 3; else pos--; break;
 		}
 		case 80:
 		{
-			if (pos == 2) pos = 0; else pos++; break;
+			if (pos == 3) pos = 0; else pos++; break;
 		}
 		case 13:
 		{
@@ -76,10 +76,11 @@ void chon(int chon)
 	{
     	int n,s;
     	GRAPH G;
+
     	LayDuLieuTuFile(A,G,n);
     	KiemTraLienThong(G,n);
     	cout << "\nNhap vi tri bat dau (1.." << n<< "): "; 
-    	cin >> s; s--;
+    	cin >> s;s--;
     	Dijkstra(G,n,s);
 		cout << "\nNhan phim Enter de tiep tuc lua chon!";
 		break;
@@ -101,6 +102,11 @@ void chon(int chon)
 	}
 
 	case 2:
+	{
+		cout << "Chua thuc hien duoc!";
+		break;
+	}
+	case 3: 
 	{
 		cout << " DA THOAT !!!" << endl;
 		exit(1);

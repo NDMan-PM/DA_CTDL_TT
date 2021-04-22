@@ -4,7 +4,6 @@ typedef int MATRIX[MAX][MAX];
 typedef MATRIX GRAPH;
 typedef int VECTOR[MAX];
 typedef VECTOR ARRAY;
-typedef VECTOR SET;
 
 #include <iostream>
 using namespace std;
@@ -14,6 +13,8 @@ void Dijkstra(GRAPH G, int n,int startnode)
 {
 	int cost[MAX][MAX], distance[MAX], pred[MAX];
 	int visited[MAX], count, mindistance, nextnode, i, j;
+    fstream f;
+    f.open("output_Dij.txt", ios::out);
 
 	//pred[] luu cac dinh ma khoang cach ngan nhat tu no den dinh nguon
 	//count dem so nut ma di qua den den dich
@@ -66,16 +67,20 @@ void Dijkstra(GRAPH G, int n,int startnode)
 	for (i = 0; i<n; i++)
 		if (i != startnode)
 		{
-			cout <<"\nChi phi toi nut "<< i+1 << ": " << distance[i];
-			cout <<"\nCach di ="<< i+1;;
-
+			cout <<"\nChi phi toi nut "<< i+1 << ": " << distance[i]; 
+            f<< endl << distance[i] <<endl;
+			cout <<"\nCach di: "<< i+1;;
+            f << i+1 << " ";
 			j = i;
 			do
 			{
 				j = pred[j];
 				cout <<"<--" << j+1;
+                f << j+1 << " ";
 			} while (j != (startnode));
 		}
+    cout << "\n\nKet qua da luu vao file output_Dij.txt\n";
+    f.close();
 }
 
 
@@ -85,6 +90,8 @@ void BellmanFord(int startnode,GRAPH G, int n)
 //Tim ddnn tu dinh u den moi dinh khac
 //p[j] la dinh truoc j tren ddnn
 {
+    fstream f;
+    f.open("output_BF.txt", ios::out);
 	int i,j,k,done;
 	ARRAY p,D;
   for (i=0; i<n; i++) D[i]=INF; D[startnode]=0;
@@ -102,14 +109,21 @@ void BellmanFord(int startnode,GRAPH G, int n)
 	if (done)  break;
   }
 	cout << "\nCac duong di:\n";
-	cout << "Cach di : Chi phi"<<endl;
-	for (int k=0; k<n; k++) if (k!=startnode){
+	for (int k=0; k<n; k++) if (k!=startnode)
+    {
 		i=k;
-		cout <<setw(1)<<left << i+1 <<"<--";
+        cout << "Chi phi den nut "<< i+1 << ": " << D[k] << endl;
+        f << D[k] << endl;
+        cout << "Cach di: ";
+		cout << i+1 <<"<--";
+        f<< i+1 << " ";
 		while (p[i]!=startnode){
 		i=p[i];
 		cout << i+1 << "<--";
+        f << i+1 << " ";
 		}
-	cout << startnode+1 <<" : " << D[k] << endl;
-}
+	cout << startnode+1 << endl;
+    f << startnode+1 << endl;
+    }
+    cout << "\nKet qua da luu vao file output_BF.txt\n";    
 }
