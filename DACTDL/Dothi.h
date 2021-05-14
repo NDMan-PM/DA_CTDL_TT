@@ -41,12 +41,20 @@ void KiemTraLienThong(GRAPH G, int n)
   
   for (k=0; k<n-1; k++)
     for (i=0; i<n; i++)
-      for (j=0; j<n; j++)      
-        b[i][j]=b[i][j]||b[i][k]&&b[k][j];
+      for (j=0; j<n; j++)       
+        {
+          b[i][j]=b[i][j]||b[i][k]&&b[k][j];       
+        }
+  
 
- cout << "Kiem tra lien thong: ";     
+    
+ int check;
   for (i=0; i<n; i++)
-    for (j=0; j<n; j++)      
-       if (!b[i][j]) cout << "\nDo thi da nhap khong lien thong.";
-  cout << "\nDo thi da nhap lien thong.";    
+    for (j=0; j<n; j++)
+    {
+      if (!b[i][j]) check = 0; break;
+    }
+// cout << "Kiem tra lien thong: ";  
+// if (check) cout << "\nDo thi da nhap lien thong.";    
+// else cout << "\nDo thi da nhap khong lien thong.";
 }
